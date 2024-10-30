@@ -7,6 +7,8 @@
 #include <dxgi1_4.h>
 #include "fonts.h"
 
+#include "window.h"
+
 
 
 #pragma comment(lib, "D3d12.lib")
@@ -65,7 +67,7 @@ int WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 	//ImGui_ImplWin32_EnableDpiAwareness();
 	WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"MemJect", nullptr };
 	::RegisterClassExW(&wc);
-	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"MemJect", WS_OVERLAPPEDWINDOW, 100, 100, 1920, 1080, nullptr, nullptr, wc.hInstance, nullptr);
+	HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"MemJect", WS_OVERLAPPEDWINDOW, 100, 100, 1000, 900, nullptr, nullptr, wc.hInstance, nullptr);
 
 
     // Initialize Direct3D
@@ -114,6 +116,7 @@ int WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
     //Our state
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     
+    bool show_test_window = false;
 
     // Main loop
     bool done = false;
@@ -148,15 +151,7 @@ int WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
         ImGui::NewFrame();
 
         //Our window
-
-        ImGui::Begin("Hello, world!");
-
-        ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-
-        ImGui::Text("Test");
-        
-        ImGui::End();
-
+        MainWindow(&show_test_window);
 
         // Rendering
         // (Your code clears your framebuffer, renders your other stuff etc.)
